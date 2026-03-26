@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.plants',
     'apps.reminders',
+    'apps.core',
 ]
 
 MIDDLEWARE = [
