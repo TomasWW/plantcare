@@ -61,7 +61,8 @@ DATABASES = {
 AUTH_USER_MODEL = 'users.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
+LOGIN_REDIRECT_URL = '/users/login/'
+LOGOUT_REDIRECT_URL = '/users/login/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
