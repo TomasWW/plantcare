@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<h2>Plant List</h2>
+<ul>
+  {%if plants %} {% for plant in plants %}
+  <li>
+    <a href="{% url 'plant_detail' plant.id %}">{{ plant.common_name }}</a>
+  </li>
+  {% endfor %} {% else %}
+  <p>You don't have any plants yet.</p>
+  {% endif %}
+</ul>
+{% endblock %}
