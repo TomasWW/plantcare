@@ -2,18 +2,28 @@ from django.shortcuts import render,redirect, get_object_or_404
 from apps.plants.models import Plant
 from .forms import PlantForm
 from .services import PlantAnalyzer
+import logging
+
 import json
+
+logger = logging.getLogger(__name__)
+
 
 def analyze_plant(request):
     if request.method == "POST":
         form = PlantForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
-            analysis_result = PlantAnalyzer.analyze_plant(image)
-            data = json.loads(analysis_result)
-            request.session['plant_data'] = data
-            
-            return redirect('plant_confirm')
+            try:
+                analysis_result = PlantAnalyzer.analyze_plant(image)
+                data = json.loads(analysis_result)
+                request.session['plant_data'] = data
+                return redirect('plant_confirm')
+            except Exception as e:
+                logger.error(f"Error occurred while analyzing plant: {str(e)}")
+                form.add_error(None, "We couldn't analyze your plant. Please try again.")
+
+        
         else:
             form.add_error(None, "Please upload a valid image.")
     else:
