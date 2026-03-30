@@ -3,7 +3,7 @@ from apps.plants.models import Plant
 from .forms import PlantForm
 from .services import PlantAnalyzer
 import logging
-
+import re
 import json
 
 logger = logging.getLogger(__name__)
@@ -16,13 +16,17 @@ def analyze_plant(request):
             image = form.cleaned_data['image']
             try:
                 analysis_result = PlantAnalyzer.analyze_plant(image)
-                data = json.loads(analysis_result)
+                json_match = re.search(r'\{.*\}', analysis_result, re.DOTALL)
+                if json_match:
+                    data = json.loads(json_match.group())
+                else:
+                    raise ValueError("No JSON found in response")
                 request.session['plant_data'] = data
+                logger.debug(f"Plant data received: {data}  from analysis result: {analysis_result}")
                 return redirect('plant_confirm')
             except Exception as e:
                 logger.error(f"Error occurred while analyzing plant: {str(e)}")
                 form.add_error(None, "We couldn't analyze your plant. Please try again.")
-
         
         else:
             form.add_error(None, "Please upload a valid image.")

@@ -1,17 +1,13 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <h2>Confirm Plant Details</h2>
 <p><strong>Common Name:</strong> {{ plant_data.common_name }}</p>
 <p><strong>Scientific Name:</strong> {{ plant_data.scientific_name }}</p>
-<p><strong>Care Instructions:</strong> </p>
-{{ plant_data.care_data.watering }}
-{{ plant_data.care_data.light }}
-{{ plant_data.care_data.temperature }}
-{{ plant_data.care_data.humidity }}
+<p><strong>Care Instructions:</strong></p>
+{{ plant_data.care_data.watering }} {{ plant_data.care_data.light }}
+{{plant_data.care_data.temperature }} {{ plant_data.care_data.humidity }}
 <form method="POST">
   {% csrf_token %}
   <button type="submit">Save</button>
-  <a href="{% url 'analyze_plants' %}">Discard</a>
+  <a href="{% url 'analyze_plant' %}">Discard</a>
 </form>
-{% endblock %}  
+{% endblock %}
