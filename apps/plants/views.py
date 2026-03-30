@@ -5,10 +5,11 @@ from .services import PlantAnalyzer
 import logging
 import re
 import json
+from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
-
+@login_required
 def analyze_plant(request):
     if request.method == "POST":
         form = PlantForm(request.POST, request.FILES)
@@ -34,15 +35,17 @@ def analyze_plant(request):
         form = PlantForm()
     return render(request, 'plants/analyze.html', {'form': form})
 
+@login_required
 def plant_list(request):
     plants = Plant.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'plants/plant_list.html', {'plants': plants})
     
-
+@login_required
 def plant_detail(request, pk):
     plant = get_object_or_404(Plant, pk=pk, user=request.user)
     return render(request, 'plants/plant_detail.html', {'plant': plant})
 
+@login_required
 def plant_confirm(request):
     plant_data = request.session.get('plant_data')
     if not plant_data:
