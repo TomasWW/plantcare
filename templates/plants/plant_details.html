@@ -1,6 +1,20 @@
 {% extends "base.html" %} {% block content %}
 <h2>Plant Details</h2>
+{% if plant.image %}
+<img
+  src="{{ plant.image.url }}"
+  alt="{{ plant.common_name }}"
+  style="max-width: 300px"
+/>
+{% endif %}
 <p><strong>Scientific Name:</strong> {{ plant.scientific_name }}</p>
 <p><strong>Common Name:</strong> {{ plant.common_name }}</p>
+<p><strong>Care Instructions:</strong></p>
+<ul>
+  <li><strong>Watering:</strong> {{ plant.care_data.watering }}</li>
+  <li><strong>Light:</strong> {{ plant.care_data.light }}</li>
+  <li><strong>Temperature:</strong> {{ plant.care_data.temperature }}</li>
+  <li><strong>Humidity:</strong> {{ plant.care_data.humidity }}</li>
+</ul>
 <!-- Add more plant details as needed -->
 {% endblock %}

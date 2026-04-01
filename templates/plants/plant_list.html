@@ -4,6 +4,14 @@
   {%if plants %} {% for plant in plants %}
   <li>
     <a href="{% url 'plant_detail' plant.id %}">{{ plant.common_name }}</a>
+    <form
+      method="POST"
+      action="{% url 'plant_delete' plant.pk %}"
+      style="display: inline"
+    >
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
   </li>
   {% endfor %} {% else %}
   <p>You don't have any plants yet.</p>

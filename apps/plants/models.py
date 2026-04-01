@@ -20,5 +20,5 @@ class Plant(TimeStampedModel):
         if self.image:
             img = Image.open(self.image.path)
             img.thumbnail((800, 800))  
-            img.save(self.image.path)  
+            img.save(self.image.path)
             
