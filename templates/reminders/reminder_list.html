@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Reminders</h2>
+
+{% if reminders_with_date %}
+    {% for item in reminders_with_date %}
+        <div>
+            <strong>{{ item.reminder.plant.common_name }}</strong> - 
+            {{ item.reminder.reminder_type }}
+            
+            {% for date in item.dates %}
+                <form method="POST" action="{% url 'complete_reminder' item.reminder.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="completed_date" value="{{ date|date:'Y-m-d' }}">
+                    <label>
+                        <input type="checkbox"
+                            {% if date in item.completed_dates %}checked{% endif %}
+                            onChange="this.form.submit()">
+                        {{ date }}
+                    </label>
+                </form>
+            {% endfor %}
+            
+            <form method="POST" action="{% url 'delete_reminder' item.reminder.id %}">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No reminders found.</p>
+{% endif %}
+
+{% endblock %}

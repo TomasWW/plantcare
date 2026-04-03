@@ -25,6 +25,7 @@ class PlantAnalyzer:
         
         prompt = """
         You are a plant expert. Analyze this plant image and respond ONLY with a JSON object with this structure:
+        How frecuent shoud I water it? How much light does it need? What is the ideal temperature and humidity for this plant?
         {
             "scientific_name": "",
             "common_name": "",

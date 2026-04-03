@@ -16,5 +16,7 @@
   <li><strong>Temperature:</strong> {{ plant.care_data.temperature }}</li>
   <li><strong>Humidity:</strong> {{ plant.care_data.humidity }}</li>
 </ul>
-<!-- Add more plant details as needed -->
+<a href="{% url 'create_reminder' plant.pk %}">Create Reminder</a>
+<a href="{% url 'plant_list' %}">Back to Plant List</a>
+<a href="{% url 'list_reminders' %}">View Reminders</a>
 {% endblock %}
