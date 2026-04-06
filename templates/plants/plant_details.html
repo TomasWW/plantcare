@@ -1,22 +1,40 @@
-{% extends "base.html" %} {% block content %}
-<h2>Plant Details</h2>
-{% if plant.image %}
-<img
-  src="{{ plant.image.url }}"
-  alt="{{ plant.common_name }}"
-  style="max-width: 300px"
-/>
-{% endif %}
-<p><strong>Scientific Name:</strong> {{ plant.scientific_name }}</p>
-<p><strong>Common Name:</strong> {{ plant.common_name }}</p>
-<p><strong>Care Instructions:</strong></p>
-<ul>
-  <li><strong>Watering:</strong> {{ plant.care_data.watering }}</li>
-  <li><strong>Light:</strong> {{ plant.care_data.light }}</li>
-  <li><strong>Temperature:</strong> {{ plant.care_data.temperature }}</li>
-  <li><strong>Humidity:</strong> {{ plant.care_data.humidity }}</li>
-</ul>
-<a href="{% url 'create_reminder' plant.pk %}">Create Reminder</a>
-<a href="{% url 'plant_list' %}">Back to Plant List</a>
-<a href="{% url 'list_reminders' %}">View Reminders</a>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-2xl border border-sage-light p-8">
+        {% if plant.image %}
+            <img src="{{ plant.image.url }}" alt="{{ plant.common_name }}" class="w-full h-48 object-cover rounded-xl mb-6">
+        {% endif %}
+
+        <h2 class="text-2xl font-semibold text-sage-dark">{{ plant.common_name }}</h2>
+        <p class="text-sm text-gray-400 italic mb-6">{{ plant.scientific_name }}</p>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-cream rounded-xl p-4">
+                <p class="text-xs text-gray-400 mb-1">💧 Watering</p>
+                <p class="text-sm text-sage-dark">{{ plant.care_data.watering }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-4">
+                <p class="text-xs text-gray-400 mb-1">☀️ Light</p>
+                <p class="text-sm text-sage-dark">{{ plant.care_data.light }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-4">
+                <p class="text-xs text-gray-400 mb-1">🌡️ Temperature</p>
+                <p class="text-sm text-sage-dark">{{ plant.care_data.temperature }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-4">
+                <p class="text-xs text-gray-400 mb-1">💦 Humidity</p>
+                <p class="text-sm text-sage-dark">{{ plant.care_data.humidity }}</p>
+            </div>
+        </div>
+
+        <a href="{% url 'create_reminder' plant.pk %}" class="block text-center bg-sage text-white py-2 rounded-xl text-sm hover:bg-sage-dark transition mb-3">
+            + Add Reminder
+        </a>
+        <a href="{% url 'plant_list' %}" class="block text-center text-sage-dark text-sm hover:text-sage">
+            ← Back to plants
+        </a>
+    </div>
+</div>
 {% endblock %}

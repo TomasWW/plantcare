@@ -1,25 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>PlantCare</title>
-  </head>
-  <body>
-    <nav>
-      {% if request.user.is_authenticated %}
-      <span>{{ request.user.username }}</span>
-      <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-      </form>
-      <a href="{% url 'plant_list' %}">My Plants</a>
-      <a href="{% url 'analyze_plant' %}">Add Plant</a>
-      {% else %}
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'register' %}">Register</a>
-      {% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantCare 🌱</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#84a98c',
+                        'sage-light': '#cad2c5',
+                        'sage-dark': '#52796f',
+                        cream: '#f8f9f0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+    input, select, textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #cad2c5;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        color: #52796f;
+        outline: none;
+        background: #f8f9f0;
+        box_sizing: border-box;
+        text-align: center;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: #84a98c;
+    }
+</style>
+</head>
+<body class="bg-cream min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-sage-light px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-sage-dark font-semibold text-lg tracking-wide">🌱 PlantCare</a>
+        <div class="flex gap-4 items-center">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'plant_list' %}" class="text-sage-dark hover:text-sage text-sm">My Plants</a>
+                <a href="{% url 'analyze_plant' %}" class="text-sage-dark hover:text-sage text-sm">Add Plant</a>
+                <a href="{% url 'list_reminders' %}" class="text-sage-dark hover:text-sage text-sm">Reminders</a>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-sage-light text-sage-dark px-4 py-1 rounded-full text-sm hover:bg-sage hover:text-white transition">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-sage-dark hover:text-sage text-sm">Login</a>
+                <a href="{% url 'register' %}" class="bg-sage text-white px-4 py-1 rounded-full text-sm hover:bg-sage-dark transition">
+                    Register
+                </a>
+            {% endif %}
+        </div>
     </nav>
 
-    {% block content %} {% endblock %}
-  </body>
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-10">
+        {% block content %}
+        {% endblock %}
+    </main>
+    {% block scripts %}
+    {% endblock %}
+
+</body>
 </html>

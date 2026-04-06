@@ -1,7 +1,36 @@
-{% extends 'base.html' %} {% block content %}
-<h2>Login</h2>
-<form method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10">
+    <div class="bg-white rounded-2xl shadow-sm border border-sage-light p-8">
+        <h2 class="text-2xl font-semibold text-sage-dark mb-2">Welcome back 🌿</h2>
+        <p class="text-sm text-gray-400 mb-6">Sign in to your PlantCare account</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-4">
+                    <label class="block text-sm text-sage-dark mb-1">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-400 text-xs mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <p class="text-red-400 text-sm mb-4">{{ form.non_field_errors.0 }}</p>
+            {% endif %}
+
+            <button type="submit" class="w-full bg-sage text-white py-2 rounded-xl hover:bg-sage-dark transition text-sm mt-2">
+                Sign In
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-400 mt-6">
+            Don't have an account? 
+            <a href="{% url 'register' %}" class="text-sage hover:text-sage-dark">Register</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

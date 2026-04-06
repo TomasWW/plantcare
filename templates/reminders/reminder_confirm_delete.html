@@ -1,10 +1,24 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Confirm Delete Reminder</h2>
-<p>Are you sure you want to delete the reminder for {{ reminder.plant.common_name }}?</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
-    <a href="{% url 'list_reminders' %}">Cancel</a>
-</form>
+<div class="max-w-md mx-auto mt-10">
+    <div class="bg-white rounded-2xl border border-sage-light p-8 text-center">
+        <p class="text-4xl mb-4">🗑️</p>
+        <h2 class="text-xl font-semibold text-sage-dark mb-2">Delete Reminder</h2>
+        <p class="text-sm text-gray-400 mb-6">
+            Are you sure you want to delete the reminder for 
+            <strong class="text-sage-dark">{{ reminder.plant.common_name }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-400 text-white py-2 rounded-xl hover:bg-red-500 transition text-sm mb-3">
+                Yes, Delete
+            </button>
+        </form>
+        <a href="{% url 'list_reminders' %}" class="block text-center text-gray-400 text-sm hover:text-sage-dark">
+            Cancel
+        </a>
+    </div>
+</div>
 {% endblock %}

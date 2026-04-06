@@ -1,20 +1,44 @@
-{% extends "base.html" %} {% block content %}
-<h2>Plant List</h2>
-<ul>
-  {%if plants %} {% for plant in plants %}
-  <li>
-    <a href="{% url 'plant_detail' plant.id %}">{{ plant.common_name }}</a>
-    <form
-      method="POST"
-      action="{% url 'plant_delete' plant.pk %}"
-      style="display: inline"
-    >
-      {% csrf_token %}
-      <button type="submit">Delete</button>
-    </form>
-  </li>
-  {% endfor %} {% else %}
-  <p>You don't have any plants yet.</p>
-  {% endif %}
-</ul>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <h2 class="text-2xl font-semibold text-sage-dark">My Plants 🌿</h2>
+    <a href="{% url 'analyze_plant' %}" class="bg-sage text-white px-4 py-2 rounded-xl text-sm hover:bg-sage-dark transition">
+        + Add Plant
+    </a>
+</div>
+
+{% if plants %}
+    <div class="grid grid-cols-1 gap-4">
+        {% for plant in plants %}
+        <div class="bg-white rounded-2xl border border-sage-light p-5 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                {% if plant.image %}
+                    <img src="{{ plant.image.url }}" alt="{{ plant.common_name }}" class="w-16 h-16 rounded-xl object-cover">
+                {% else %}
+                    <div class="w-16 h-16 rounded-xl bg-sage-light flex items-center justify-center text-2xl">🌱</div>
+                {% endif %}
+                <div>
+                    <a href="{% url 'plant_detail' plant.pk %}" class="text-sage-dark font-medium hover:text-sage">
+                        {{ plant.common_name }}
+                    </a>
+                    <p class="text-xs text-gray-400 italic">{{ plant.scientific_name }}</p>
+                </div>
+            </div>
+            <form method="POST" action="{% url 'plant_delete' plant.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="text-red-300 hover:text-red-500 text-sm transition">Delete</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center py-20 text-gray-400">
+        <p class="text-4xl mb-4">🪴</p>
+        <p class="text-sm">No plants yet. Add your first one!</p>
+        <a href="{% url 'analyze_plant' %}" class="mt-4 inline-block bg-sage text-white px-4 py-2 rounded-xl text-sm hover:bg-sage-dark transition">
+            Add Plant
+        </a>
+    </div>
+{% endif %}
 {% endblock %}

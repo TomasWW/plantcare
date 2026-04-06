@@ -1,10 +1,25 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Confirm Complete Reminder</h2>
-<p>Are you sure you want to mark the reminder for {{ reminder.plant.common_name }} as complete?</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, Complete</button>
-    <a href="{% url 'list_reminders' %}">Cancel</a>
-</form>
+<div class="max-w-md mx-auto mt-10">
+    <div class="bg-white rounded-2xl border border-sage-light p-8 text-center">
+        <p class="text-4xl mb-4">✅</p>
+        <h2 class="text-xl font-semibold text-sage-dark mb-2">Mark as Complete</h2>
+        <p class="text-sm text-gray-400 mb-6">
+            Mark reminder for 
+            <strong class="text-sage-dark">{{ reminder.plant.common_name }}</strong> 
+            as completed?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-sage text-white py-2 rounded-xl hover:bg-sage-dark transition text-sm mb-3">
+                Yes, Complete
+            </button>
+        </form>
+        <a href="{% url 'list_reminders' %}" class="block text-center text-gray-400 text-sm hover:text-sage-dark">
+            Cancel
+        </a>
+    </div>
+</div>
 {% endblock %}

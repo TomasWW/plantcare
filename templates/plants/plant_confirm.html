@@ -1,13 +1,48 @@
-{% extends "base.html" %} {% block content %}
-<h2>Confirm Plant Details</h2>
-<p><strong>Common Name:</strong> {{ plant_data.common_name }}</p>
-<p><strong>Scientific Name:</strong> {{ plant_data.scientific_name }}</p>
-<p><strong>Care Instructions:</strong></p>
-{{ plant_data.care_data.watering }} {{ plant_data.care_data.light }}
-{{plant_data.care_data.temperature }} {{ plant_data.care_data.humidity }}
-<form method="POST">
-  {% csrf_token %}
-  <button type="submit">Save</button>
-  <a href="{% url 'plant_discard' %}">Discard</a>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10">
+    <div class="bg-white rounded-2xl border border-sage-light p-8">
+        <h2 class="text-2xl font-semibold text-sage-dark mb-2">Save this plant? 🌱</h2>
+        <p class="text-sm text-gray-400 mb-6">Review the details before saving</p>
+
+        <div class="bg-cream rounded-xl p-4 mb-6">
+            <p class="text-sm text-gray-400 mb-1">Common Name</p>
+            <p class="text-sage-dark font-medium">{{ plant_data.common_name }}</p>
+        </div>
+        <div class="bg-cream rounded-xl p-4 mb-6">
+            <p class="text-sm text-gray-400 mb-1">Scientific Name</p>
+            <p class="text-sage-dark font-medium italic">{{ plant_data.scientific_name }}</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="bg-cream rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">💧 Watering</p>
+                <p class="text-xs text-sage-dark">{{ plant_data.care_data.watering }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">☀️ Light</p>
+                <p class="text-xs text-sage-dark">{{ plant_data.care_data.light }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">🌡️ Temperature</p>
+                <p class="text-xs text-sage-dark">{{ plant_data.care_data.temperature }}</p>
+            </div>
+            <div class="bg-cream rounded-xl p-3">
+                <p class="text-xs text-gray-400 mb-1">💦 Humidity</p>
+                <p class="text-xs text-sage-dark">{{ plant_data.care_data.humidity }}</p>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-sage text-white py-2 rounded-xl hover:bg-sage-dark transition text-sm mb-3">
+                Save Plant
+            </button>
+        </form>
+        <a href="{% url 'plant_discard' %}" class="block text-center text-gray-400 text-sm hover:text-sage-dark">
+            Discard
+        </a>
+    </div>
+</div>
 {% endblock %}
