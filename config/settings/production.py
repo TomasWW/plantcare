@@ -1,9 +1,13 @@
 from .base import *  # noqa: F401, F403
-from decouple import config
 
 DEBUG = False
 
 ALLOWED_HOSTS = config(
-    'ALLOWED_HOSTS',
-    cast=lambda v: [s.strip() for s in v.split(',')]
+    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")]
 )
+
+# Whitenoise para servir archivos estáticos
+MIDDLEWARE = ["whitenoise.middleware.WhiteNoiseMiddleware"] + MIDDLEWARE
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

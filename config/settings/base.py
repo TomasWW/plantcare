@@ -87,3 +87,4 @@ LOGGING = {
         "level": "DEBUG",
     },
 }
+STATIC_ROOT = BASE_DIR / "staticfiles"
